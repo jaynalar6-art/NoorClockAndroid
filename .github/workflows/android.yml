@@ -26,3 +26,4 @@ jobs:
 
       - name: Build debug APK using local Gradle
         run: gradle assembleDebug
+        
