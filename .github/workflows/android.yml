@@ -21,13 +21,18 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Find Project Directory and Build
+      - name: Find Project, Give Permission and Build
         run: |
-          # Mencari folder yang berisi settings.gradle secara otomatis
-          PROJECT_DIR=$(find . -name "settings.gradle" -exec dirname {} \; | head -n 1)
-          echo "Folder proyek ditemukan di: $PROJECT_DIR"
+          # Mencari folder proyek utama yang berisi berkas gradlew
+          PROJECT_DIR=$(find . -name "gradlew" -exec dirname {} \; | head -n 1)
+          echo "Folder proyek utama ditemukan di: $PROJECT_DIR"
           cd "$PROJECT_DIR"
-          gradle assembleDebug
+          
+          # Memberikan izin akses eksekusi ke gradlew bawaan proyek
+          chmod +x gradlew
+          
+          # Merakit APK menggunakan versi Gradle asli proyek Anda
+          ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
