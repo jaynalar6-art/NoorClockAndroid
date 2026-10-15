@@ -21,10 +21,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install Stable Gradle Version
+      - name: Install Required Gradle Version
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.5'
+          gradle-version: '8.9'
 
       - name: Find Project and Build with Local Gradle
         run: |
@@ -33,7 +33,7 @@ jobs:
           echo "Folder proyek ditemukan di: $PROJECT_DIR"
           cd "$PROJECT_DIR"
           
-          # Melakukan kompilasi menggunakan Gradle versi 8.5 yang stabil
+          # Melakukan kompilasi menggunakan Gradle versi 8.9 yang diminta proyek
           gradle assembleDebug
 
       - name: Upload APK Artifact
