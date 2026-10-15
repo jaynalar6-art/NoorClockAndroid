@@ -21,18 +21,20 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Find Project, Give Permission and Build
+      - name: Install Stable Gradle Version
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.5'
+
+      - name: Find Project and Build with Local Gradle
         run: |
-          # Mencari folder proyek utama yang berisi berkas gradlew
-          PROJECT_DIR=$(find . -name "gradlew" -exec dirname {} \; | head -n 1)
-          echo "Folder proyek utama ditemukan di: $PROJECT_DIR"
+          # Mencari folder proyek yang berisi file build.gradle
+          PROJECT_DIR=$(find . -name "build.gradle" -exec dirname {} \; | head -n 1)
+          echo "Folder proyek ditemukan di: $PROJECT_DIR"
           cd "$PROJECT_DIR"
           
-          # Memberikan izin akses eksekusi ke gradlew bawaan proyek
-          chmod +x gradlew
-          
-          # Merakit APK menggunakan versi Gradle asli proyek Anda
-          ./gradlew assembleDebug
+          # Melakukan kompilasi menggunakan Gradle versi 8.5 yang stabil
+          gradle assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
