@@ -12,6 +12,9 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Unzip project files
+        run: unzip NoorClockAndroid_lengkap.zip
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
